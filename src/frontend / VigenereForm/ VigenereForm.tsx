@@ -6,14 +6,15 @@ import SaveIcon from '@mui/icons-material/Save';
 
 interface Props {
   onSubmit: (vigenere: Vigenere, action: 'encode' | 'decode') => void;
-  isLoading: boolean;
+  isLoading: { encode: boolean; decode: boolean };
+  result: string;
 }
 
-const VigenereForm: React.FC<Props> = ({onSubmit, isLoading}) => {
+const VigenereForm: React.FC<Props> = ({onSubmit, isLoading, result}) => {
   const [state, setState] = useState<Vigenere>({
     password: '',
-    encodedMessage: '',
-    decodedMessage: '',
+    encoded: '',
+    decoded: '',
   });
 
   const submitEncodeHandler = (e: React.FormEvent) => {
@@ -41,57 +42,56 @@ const VigenereForm: React.FC<Props> = ({onSubmit, isLoading}) => {
         <Grid item xs>
           <TextField
             required
+            id="decoded" label="decoded"
+            name="decoded"
+            value={state.decoded || result}
+            onChange={inputChangeHandler}
+          />
+        </Grid>
+        <Grid item xs>
+          <TextField
+            required
             id="password" label="Password"
             name="password"
             value={state.password}
             onChange={inputChangeHandler}
+            sx={{width: '300px', mr: '20px'}}
           />
-        </Grid>
-        <Grid item xs>
-          <TextField
-            required
-            id="encodedMessage" label="encodedMessage"
-            name="encodedMessage"
-            value={state.encodedMessage}
-            onChange={inputChangeHandler}
-          />
-        </Grid>
-        <Grid item xs>
-          <TextField
-            required
-            id="decodedMessage" label="decodedMessage"
-            name="decodedMessage"
-            value={state.decodedMessage}
-            onChange={inputChangeHandler}
-          />
-        </Grid>
-        <Grid item xs>
           <LoadingButton
             type="submit"
             color="primary"
             variant="contained"
-            disabled={isLoading}
-            loading={isLoading}
+            disabled={isLoading.encode}
+            loading={isLoading.encode}
             loadingPosition="start"
             startIcon={<SaveIcon/>}
             onClick={submitEncodeHandler}
+            sx={{mr: '20px'}}
           >
             Down
           </LoadingButton>
-        </Grid>
-        <Grid item xs>
           <LoadingButton
             type="submit"
             color="primary"
             variant="contained"
-            disabled={isLoading}
-            loading={isLoading}
+            disabled={isLoading.decode}
+            loading={isLoading.decode}
             loadingPosition="start"
             startIcon={<SaveIcon/>}
             onClick={submitDecodeHandler}
+            sx={{mr: '20px'}}
           >
             Up
           </LoadingButton>
+        </Grid>
+        <Grid item xs>
+          <TextField
+            required
+            id="encoded" label="encoded"
+            name="encoded"
+            value={state.encoded || result}
+            onChange={inputChangeHandler}
+          />
         </Grid>
       </Grid>
     </form>

@@ -1,12 +1,7 @@
-import type { Metadata } from 'next';
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { Container, CssBaseline, ThemeProvider } from '@mui/material';
 import theme from '@/theme';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-
-export const metadata: Metadata = {
-  title: 'Shop Frontend',
-  description: 'Educational project for Attractor School React courses',
-};
+import React from 'react';
 
 export default function RootLayout({
   children,
@@ -16,12 +11,16 @@ export default function RootLayout({
   return (
     <AppRouterCacheProvider>
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
-        <html lang="en">
+          <CssBaseline/>
+          <html lang="en">
           <body>
-            {children}
+          <main>
+            <Container maxWidth="xl" sx={{mt: 2}}>
+              {children}
+            </Container>
+          </main>
           </body>
-        </html>
+          </html>
       </ThemeProvider>
     </AppRouterCacheProvider>
   );

@@ -1,5 +1,5 @@
 export interface Vigenere {
   password: string,
-  encodedMessage: string,
-  decodedMessage: string,
+  encoded: string,
+  decoded: string,
 }
